@@ -1,0 +1,66 @@
+{
+	"name": "schema-server-client",
+	"version": "1.0.0",
+	"description": "Client library for consuming JSON schema server.",
+	"main": "build/index.js",
+	"types": "build/index.d.ts",
+	"scripts": {
+		"start": "tsc-watch --onSuccess \"node --inspect build/example\"",
+		"tidy": "yarn tidy:build && yarn tidy:coverage",
+		"tidy:build": "rimraf build",
+		"tidy:coverage": "rimraf coverage",
+		"build": "yarn tidy && tsc",
+		"lint": "tslint --format codeFrame src/**/*.ts",
+		"lint-fix": "tslint src/**/*.ts --fix",
+		"test": "jest --verbose",
+		"test-watch": "jest --watch --collectCoverage",
+		"coverage": "yarn tidy:coverage && jest --collectCoverage",
+		"coveralls": "yarn coverage && cat ./coverage/lcov.info | coveralls",
+		"prettier":
+			"prettier --trailing-comma all --single-quote --use-tabs --no-bracket-spacing --print-width 120 --write src/**/*.ts",
+		"precommit": "yarn lint && yarn test && yarn prettier && git add -A"
+	},
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/kallaspriit/schema-server-client.git"
+	},
+	"keywords": ["normalize", "javascript", "type", "types", "real", "number", "boolean"],
+	"author": "Priit Kallas <kallaspriit@gmail.com>",
+	"license": "MIT",
+	"bugs": {
+		"url": "https://github.com/kallaspriit/schema-server-client/issues"
+	},
+	"homepage": "https://github.com/kallaspriit/schema-server-client#readme",
+	"dependencies": {
+		"@types/change-case": "^2.3.1",
+		"@types/json-schema": "^4.0.0",
+		"change-case": "^3.0.1",
+		"json-schema": "^0.2.3",
+		"json-schema-to-typescript": "^4.6.5"
+	},
+	"devDependencies": {
+		"@types/jest": "^20.0.8",
+		"coveralls": "^2.13.1",
+		"husky": "^0.14.3",
+		"jest": "^21.2.1",
+		"prettier": "^1.6.1",
+		"rimraf": "^2.6.1",
+		"ts-jest": "^21.1.4",
+		"tsc-watch": "^1.0.8",
+		"tslint": "^5.7.0",
+		"tslint-config-prettier": "^1.5.0",
+		"tslint-eslint-rules": "^4.1.1",
+		"typescript": "^2.6.1"
+	},
+	"jest": {
+		"transform": {
+			"^.+\\.(ts|tsx)$": "<rootDir>/node_modules/ts-jest/preprocessor.js"
+		},
+		"roots": ["src"],
+		"mapCoverage": true,
+		"collectCoverage": false,
+		"collectCoverageFrom": ["**/src/**/*.ts"],
+		"testRegex": "(/__tests__/.*|\\.(test|spec))\\.(ts|tsx)$",
+		"moduleFileExtensions": ["ts", "tsx", "js", "json"]
+	}
+}

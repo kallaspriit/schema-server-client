@@ -1,0 +1,5 @@
+node_modules
+coverage
+.idea
+coveralls.yml
+yarn-error.log
