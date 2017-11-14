@@ -9,6 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const axios_1 = require("axios");
+const change_case_1 = require("change-case");
 function fetchSchema(url) {
     return __awaiter(this, void 0, void 0, function* () {
         const schema = yield axios_1.default.get(url);
@@ -16,4 +17,39 @@ function fetchSchema(url) {
     });
 }
 exports.fetchSchema = fetchSchema;
+function getApiDescriptor(route) {
+    return __awaiter(this, void 0, void 0, function* () {
+        const path = getDescriptorPath(route.group);
+        const name = getDescriptorName(route.name, route.path, route.method);
+        const method = change_case_1.camelCase(name);
+        const contents = yield getDescriptorContents(method, route.requestSchema, route.responseSchema);
+        const descriptor = {
+            route,
+            path,
+            name,
+            method,
+            contents,
+        };
+        return descriptor;
+    });
+}
+exports.getApiDescriptor = getApiDescriptor;
+function getDescriptorContents(method, _requestSchema, _responseSchema) {
+    return __awaiter(this, void 0, void 0, function* () {
+        return [`export default function ${method}() {`, `  return null;`, `}`].join('\n');
+    });
+}
+exports.getDescriptorContents = getDescriptorContents;
+function getDescriptorPath(group) {
+    if (group.length > 0) {
+        return group;
+    }
+    return 'index';
+}
+function getDescriptorName(name, _path, _method) {
+    if (name.substring(name.length - 6) === '-route') {
+        return name.substring(0, name.length - 6);
+    }
+    return name;
+}
 //# sourceMappingURL=index.js.map

@@ -24,6 +24,7 @@ npm install schema-server-client
 - `yarn test` to run tests.
 - `yarn lint` to lint the codebase.
 - `yarn start` to start the example application.
+- `yarn debug` to start the example application in debug mode (`--inspect`).
 - `yarn coverage` to gather code coverage.
 - `yarn prettier` to run prettier.
 
